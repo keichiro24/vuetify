@@ -105,6 +105,8 @@ export const stack: CalendarEventOverlapMode = (events, firstWeekday, overlapThr
 }
 
 function calculateBounds (nodes: Node[], overlapThreshold: number) {
+  const nodesLength = nodes.length
+  let forNum = 0
   for (const node of nodes) {
     const { visual, parent } = node
     const columns = getMaxChildIndex(node) + 1
@@ -116,10 +118,9 @@ function calculateBounds (nodes: Node[], overlapThreshold: number) {
     const columnWidth = spaceWidth / (columns - node.index + (node.sibling ? 1 : 0)) * columnWidthMultiplier
 
     if (parent) {
-      visual.left = node.sibling
-        ? spaceLeft + columnOffset
-        : spaceLeft + offset
+      visual.left = (90 / nodesLength) * forNum
     }
+    forNum++
 
     visual.width = hasFullWidth(node, nodes, overlapThreshold)
       ? FULL_WIDTH - visual.left
